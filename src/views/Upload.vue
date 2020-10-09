@@ -9,6 +9,7 @@
 import io from 'socket.io-client'
 import config from '../../local.env.json'
 export default {
+  name: 'UploadPage',
   data () {
     return {
       url: '',
@@ -16,10 +17,14 @@ export default {
     }
   },
   methods: {
+    /**
+     * 上传处理函数，如果不上传服务器，直接转成base64，使用FileReader，如果有上传接口，在这里调用
+     */
     async onChange () {
       console.log(this.$refs.file.files)
       const reader =  new FileReader()
       reader.readAsDataURL(this.$refs.file.files[0])
+      this.socket.emit('newFile')
       reader.onloadend = () => {
         this.url = reader.result
         this.socket.emit('uploaded', this.url)

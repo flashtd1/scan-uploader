@@ -23,11 +23,16 @@ io.on('connection', client => {
         } else {
             client.emit('joinFailed')
         }
-        console.log(room ,rooms[room].length)
+        console.log(room , (rooms[room] || []).length)
+    })
+
+    client.on('newFile', () => {
+        io.to(client.room).emit('newFile')
     })
 
     client.on('uploaded', (url) => {
-        rooms[client.room][0].emit('onUpload', url)
+        console.log(url)
+        io.to(client.room).emit('onUpload', url)
     })
     client.on('disconnect', () => {
         const room = client.room

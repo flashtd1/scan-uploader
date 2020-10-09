@@ -1,24 +1,29 @@
 <template>
   <div>
-    <scan-to-upload @change="onChange"/>
-    <scan-to-upload @change="onChange"/>
+    <scan-to-upload v-model="image1"/>
+    <scan-to-upload v-model="image2"/>
   </div>
 </template>
 
 <script>
 import ScanToUpload from '@/components/ScanToUpload.vue'
 export default {
+  name: 'Home',
   components: {
     ScanToUpload
   },
   data () {
     return {
-      image: ''
+      image1: '',
+      image2: ''
     }
   },
-  methods: {
-    onChange (url) {
-      this.image = url
+  watch: {
+    image1 (nv) {
+      console.log('image1 changed', nv)
+    },
+    image2 (nv) {
+      console.log('image2 changed', nv)
     }
   }
 }
